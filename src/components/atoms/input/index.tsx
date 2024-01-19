@@ -1,54 +1,70 @@
 import { InputType } from './types'
-import { forwardRef, Ref, useState } from 'react'
+import { Slot } from '@radix-ui/react-slot'
 
-export const Input = forwardRef(
-  (
-    { error, placeholderIcon: Icon, ...props }: InputType,
-    forwardedRef: Ref<HTMLInputElement>,
-  ) => {
-    const [isFocused, setIsFocused] = useState(false)
+function getTextInputVariant(variant: InputType['variant']) {
+  switch (variant) {
+    case 'Filled':
+      return TextInputFilled
+    case 'Outlined':
+      return TextInputFilled
+    default:
+      return TextInputInput
+  }
+}
 
-    const handleFocus = () => {
-      setIsFocused(true)
-    }
+function TextInputRoot(props: InputType) {
+  const { variant, children } = props
+  const TextInputComponent = getTextInputVariant(variant)
 
-    const handleBlur = () => {
-      setIsFocused(false)
-    }
+  return (
+    <div className="border-palette-primary border-b-solid flex h-14 w-full items-center justify-between gap-3 border-b bg-transparent p-4">
+      {TextInputComponent && (
+        <TextInputComponent {...props}>{children}</TextInputComponent>
+      )}
+    </div>
+  )
+}
 
-    return (
-      <div className="relative">
-        {Icon && (
-          <span className="absolute left-0 top-[18px] flex items-center pl-3 text-[#33333370]">
-            <Icon size={15} />
-          </span>
-        )}
-        <div className="flex flex-col">
-          <label
-            className={`absolute left-3 top-${
-              isFocused || props.value ? '0' : '3'
-            } pointer-events-none text-[#33333370] transition-all ${
-              isFocused || props.value ? 'text-sm' : 'text-base'
-            }`}
-          >
-            {props.placeholder}
-          </label>
-          <input
-            ref={forwardedRef}
-            {...props}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            className={`text h-12 rounded border-2 border-[#33333350] text-black placeholder:text-[#33333370] focus-visible:border-red-50 focus-visible:outline-none focus-visible:outline-1 ${
-              error ? 'border-red-50 bg-red-200' : 'bg-[#F6F6F6] '
-            } ${Icon ? 'pl-8 pr-2' : 'pl-3 '}`}
-          />
-          {error && <span className="mt-1 text-sm text-red-500">{error}</span>}
-        </div>
-      </div>
-    )
-  },
-)
+TextInputRoot.displayName = 'TextInput.Root'
 
-Input.displayName = 'Input'
+function TextInputIcon(props: InputType) {
+  return <Slot className="h-6 w-6 text-white">{props.children}</Slot>
+}
 
-export default Input
+TextInputIcon.displayName = 'TextInput.Icon'
+
+function TextInputInput({ placeholder, ...props }: InputType) {
+  return (
+    <div className="group relative flex w-full">
+      <label className="group-focus-within:text-palette-primary absolute bottom-0 z-[1] text-sm text-zinc-500 transition-all duration-700 group-focus-within:bottom-6 group-focus-within:block">
+        {placeholder}
+      </label>
+      <input
+        className="z-[10] flex-1 items-center bg-transparent text-sm text-white outline-none"
+        {...props}
+      />
+    </div>
+  )
+}
+
+function TextInputFilled({ placeholder, ...props }: InputType) {
+  return (
+    <div className="group relative flex w-full">
+      <label className="group-focus-within:text-palette-primary absolute bottom-0 z-[1] text-sm text-zinc-500 transition-all duration-700 group-focus-within:bottom-6 group-focus-within:block">
+        {placeholder}
+      </label>
+      <input
+        className="z-[10] flex-1 items-center bg-transparent text-sm text-white outline-none"
+        {...props}
+      />
+    </div>
+  )
+}
+
+TextInputInput.displayName = 'TextInput.Input'
+
+export const TextInput = {
+  Root: TextInputRoot,
+  Input: TextInputInput,
+  Icon: TextInputIcon,
+}
