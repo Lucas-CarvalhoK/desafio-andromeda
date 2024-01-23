@@ -3,5 +3,5 @@ import { IconType } from 'react-icons'
 
 export interface InputType extends InputHTMLAttributes<HTMLInputElement> {
   children?: ReactNode
-  variant: 'Standard' | 'Filled' | 'Outlined'
+  variant?: 'Standard' | 'Filled' | 'Outlined'
 }
