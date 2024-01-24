@@ -12,7 +12,7 @@ const meta: Meta = {
       control: { type: 'number' },
     },
     currentValue: {
-      control: { type: 'range', min: 0, max: 100, step: 1 },
+      control: { type: 'range', min: 0, max: 110, step: 1 },
     },
   },
 }
