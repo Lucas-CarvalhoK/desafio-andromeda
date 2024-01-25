@@ -1,6 +1,6 @@
-import { ButtonHTMLAttributes } from 'react'
+import { InputHTMLAttributes } from 'react'
 import { IconType } from 'react-icons'
 
-export interface ButtonType extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonType extends InputHTMLAttributes<HTMLInputElement> {
   ButtonIcon: IconType
 }
