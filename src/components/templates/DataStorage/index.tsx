@@ -1,13 +1,14 @@
-import { cn } from '@/services/utils/className'
 import { FaPlane, FaBuilding, FaFile } from 'react-icons/fa'
 import { GiCapybara } from 'react-icons/gi'
 import { Button, ProgressBar, StorageCount } from '@/components/atoms'
 import { useState } from 'react'
 
-const totalStorage = 100000000000
+const totalStorage = 1000000000
 
 const DataStorage = () => {
   const [usedValue, setUsedValue] = useState(0)
+  const [progressBarValue, setProgressBarValue] = useState(0)
+  const [spaceFree, setSpaceFree] = useState(totalStorage)
 
   function bytesToGB(bytes: number) {
     const gigabytes = bytes / (1024 * 1024 * 1024)
@@ -15,8 +16,9 @@ const DataStorage = () => {
   }
 
   function DataSpace(usedSpace: number) {
-    const spaceFree = usedSpace - totalStorage
-    return spaceFree
+    const freeSpace = totalStorage - usedSpace
+    setSpaceFree(freeSpace)
+    return freeSpace
   }
 
   function getFileSize() {
@@ -27,21 +29,16 @@ const DataStorage = () => {
         const arquivo = input.files[0]
 
         const fileSize = arquivo.size
-        console.log('Tamanho do Arquivo: ' + fileSize + ' bytes')
-
-        // Adiciona o tamanho do arquivo ao valor usado
         const newUsedValue = usedValue + fileSize
+        setProgressBarValue(newUsedValue)
         setUsedValue(newUsedValue)
-        console.log('Tamanho do Arquivo: ' + bytesToGB(newUsedValue) + ' GB')
 
-        // Verifica se o espaço usado ultrapassou o limite total
         if (usedValue > totalStorage) {
-          console.log('Limite de armazenamento excedido!')
+          alert('Limite de armazenamento excedido!')
         }
 
-        // Agora você pode chamar a função DataSpace com o valor atualizado de usedValue
         const spaceFree = DataSpace(newUsedValue)
-        console.log('Espaço Livre: ' + spaceFree + ' GB')
+        console.log(spaceFree)
       } else {
         console.log('Nenhum arquivo selecionado')
       }
@@ -85,17 +82,15 @@ const DataStorage = () => {
           </span>
         </div>
         <div>
-          <ProgressBar total={totalStorage} currentValue={77} />
+          <ProgressBar total={totalStorage} currentValue={progressBarValue} />
           <div className="flex justify-between">
             <span className="text-xs font-bold text-[#01FF4F]">0 GB</span>
-            <span className="text-xs font-bold text-[#01FF4F]">
-              {totalStorage} GB
-            </span>
+            <span className="text-xs font-bold text-[#01FF4F]">1 GB</span>
           </div>
         </div>
         <div className="flex w-full justify-center">
           <StorageCount
-            GbFault={DataSpace()}
+            GbFault={bytesToGB(spaceFree)}
             text="GB restantes"
             className="translate-y-6"
           />
