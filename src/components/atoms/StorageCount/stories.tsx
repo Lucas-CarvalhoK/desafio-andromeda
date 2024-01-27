@@ -11,5 +11,5 @@ export default meta
 type Story = StoryObj<StorageCountType>
 
 export const Default: Story = {
-  render: () => <StorageCount GbFault={37} text="GB Restantes" />,
+  render: () => <StorageCount GbFault="23" text="GB Restantes" />,
 }

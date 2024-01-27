@@ -9,7 +9,7 @@ const Button = ({ className, ButtonIcon: Icon, ...props }: ButtonType) => {
         className,
       )}
     >
-      <input type="file" className={cn('hidden', className)} {...props} />
+      <input type="file" className={cn('hidden')} {...props} />
       <Icon size={20} />
     </label>
   )

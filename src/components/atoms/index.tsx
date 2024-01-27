@@ -1,6 +1,6 @@
-import Button from './Button'
+import Button from './button'
 import Input from './input'
-import ProgressBar from './progress Bar'
-import StorageCount from './StorageCount'
+import ProgressBar from './progressBar'
+import StorageCount from './storageCount'
 
 export { Button, Input, ProgressBar, StorageCount }

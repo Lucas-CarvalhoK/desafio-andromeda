@@ -1,19 +1,18 @@
-import { InputType } from './types'
 import DataStorage from '.'
 import { Meta, StoryObj } from '@storybook/react'
 
-const meta: Meta<InputType> = {
+const meta: Meta = {
   title: 'Components/templates/DataStorage',
   component: DataStorage,
-  argTypes: {
-    placeholder: { control: 'text' },
-    variant: { control: 'radio' },
-  },
 }
 
 export default meta
 type Story = StoryObj
 
 export const Primary: Story = {
-  render: () => <DataStorage />,
+  render: () => (
+    <div className="h-[100vh] w-full bg-[url('public/images/baground.jpg')] bg-cover">
+      <DataStorage />,
+    </div>
+  ),
 }

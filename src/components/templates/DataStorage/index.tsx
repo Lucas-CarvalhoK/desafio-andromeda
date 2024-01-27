@@ -3,7 +3,7 @@ import { GiCapybara } from 'react-icons/gi'
 import { Button, ProgressBar, StorageCount } from '@/components/atoms'
 import { useState } from 'react'
 
-const totalStorage = 1000000000
+const totalStorage = 1073741824
 
 const DataStorage = () => {
   const [usedValue, setUsedValue] = useState(0)
@@ -48,7 +48,7 @@ const DataStorage = () => {
   }
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 p-4 md:flex-row">
       <div className="w-full rounded rounded-tr-[100px] bg-black">
         <div className="flex flex-col gap-4 px-3 py-6">
           <div className="flex gap-5 text-[#01FF4F]">
@@ -71,8 +71,8 @@ const DataStorage = () => {
         </div>
       </div>
 
-      <div className="w-full rounded bg-black">
-        <div>
+      <div className="w-full rounded bg-black px-4 pt-3">
+        <div className="px-1">
           <span className="text-sm text-[#01FF4F]">
             Você utilizou{' '}
             <span className="text-sm font-bold text-[#01FF4F]">
@@ -81,9 +81,15 @@ const DataStorage = () => {
             do seu armazenamento
           </span>
         </div>
-        <div>
-          <ProgressBar total={totalStorage} currentValue={progressBarValue} />
-          <div className="flex justify-between">
+        <div className="px-1">
+          <div className="py-3">
+            <ProgressBar
+              total={totalStorage}
+              currentValue={progressBarValue}
+              className="rounded-xl"
+            />
+          </div>
+          <div className="flex justify-between px-1">
             <span className="text-xs font-bold text-[#01FF4F]">0 GB</span>
             <span className="text-xs font-bold text-[#01FF4F]">1 GB</span>
           </div>

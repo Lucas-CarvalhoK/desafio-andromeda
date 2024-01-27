@@ -6,11 +6,6 @@ const ProgressBar = ({ total, currentValue, className }: progressBarType) => {
   const progressBarRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
-    if (currentValue > total) {
-      alert('O valor atual não pode ser maior que o total')
-      return
-    }
-
     const progressBar = progressBarRef.current
 
     if (progressBar) {
@@ -24,8 +19,7 @@ const ProgressBar = ({ total, currentValue, className }: progressBarType) => {
       <div
         ref={progressBarRef}
         className={cn(
-          'h-full bg-orange-700 duration-500 ease-in-out',
-          className,
+          'h-full rounded-xl bg-orange-700 bg-gradient-to-r from-[#01FF4F] via-yellow-400 to-red-600 py-2 duration-500 ease-in-out',
         )}
       />
     </div>
