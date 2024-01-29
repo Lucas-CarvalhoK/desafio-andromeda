@@ -4,7 +4,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { FaUser } from 'react-icons/fa'
 
 const meta: Meta<ButtonType> = {
-  title: 'Components/Atoms/Button',
+  title: 'Components/Atoms/button',
   component: Button,
 }
 

@@ -5,7 +5,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { progressBarType } from './types'
 
 const meta: Meta = {
-  title: 'Components/Atoms/ProgressBar',
+  title: 'Components/Atoms/progressBar',
   component: ProgressBar,
   argTypes: {
     total: {

@@ -3,7 +3,7 @@ import StorageCount from '.'
 import { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<StorageCountType> = {
-  title: 'Components/Atoms/StorageCount',
+  title: 'Components/Atoms/storageCount',
   component: StorageCount,
 }
 
