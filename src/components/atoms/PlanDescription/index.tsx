@@ -1,12 +1,8 @@
 import React, { useEffect, useRef } from 'react'
-import { progressBarType } from './types'
 import { cn } from '@/services/utils/className'
+import { progressBarType } from '../progressBar/types'
 
-const PlanDescription = ({
-  total,
-  currentValue,
-  className,
-}: progressBarType) => {
+const ProgressBar = ({ total, currentValue, className }: progressBarType) => {
   const progressBarRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -30,4 +26,4 @@ const PlanDescription = ({
   )
 }
 
-export default PlanDescription
+export default ProgressBar
