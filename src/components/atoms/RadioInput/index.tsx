@@ -3,7 +3,7 @@ import { cn } from '@/services/utils/className'
 
 const RadioInput = ({ options, name, onChange, ...props }: InputType) => {
   return (
-    <div>
+    <div className="flex gap-x-4">
       {options.map((option, index) => (
         <div key={index}>
           <input
