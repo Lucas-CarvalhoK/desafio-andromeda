@@ -1,119 +1,137 @@
 import { FaPlane, FaBuilding, FaFile } from 'react-icons/fa'
 import { GiCapybara } from 'react-icons/gi'
 import { Checkbox } from '@/components/atoms'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { checkboxesData } from '@/components/models/Form'
 
 const Budget = () => {
+  const [selectedItems, setSelectedItems] = useState([])
+  const [totalValue, setTotalValue] = useState(0)
+
+  const handleCheckboxChange = (id: string, value: number) => {
+    const selectedItemIndex = selectedItems.findIndex((item) => item.id === id)
+
+    if (selectedItemIndex !== -1) {
+      const newSelectedItems = [...selectedItems]
+      newSelectedItems.splice(selectedItemIndex, 1)
+      setSelectedItems(newSelectedItems)
+    } else {
+      setSelectedItems([...selectedItems, { id, value }])
+    }
+  }
+
+  const handleRadioChange = (name: string, value: string) => {
+    // Handling radio button change (similar logic as checkboxes)
+    const selectedRadioIndex = selectedItems.findIndex(
+      (item) => item.id === name,
+    )
+
+    if (selectedRadioIndex !== -1) {
+      const newSelectedItems = [...selectedItems]
+      newSelectedItems.splice(selectedRadioIndex, 1)
+      setSelectedItems(newSelectedItems)
+    }
+
+    if (value === 'Sim') {
+      setSelectedItems([...selectedItems, { id: name, value: 50 }])
+    }
+  }
+
+  useEffect(() => {
+    const newTotalValue = selectedItems.reduce(
+      (acc, item) => acc + item.value,
+      0,
+    )
+    setTotalValue(newTotalValue)
+  }, [selectedItems])
+
   return (
-    <section className="flex w-[100vw] items-center justify-center">
-      <div className="flex flex-col justify-center">
-        <div className="flex gap-x-7">
-          <div className="h-20 w-20 bg-red-600" />
-          <div className="h-20 w-20 bg-green-600" />
-          <div className="h-20 w-20 bg-blue-600" />
+    <section className="w-[100vw] bg-slate-700">
+      <form className="flex h-full w-full items-center justify-center">
+        <div className="flex w-full max-w-7xl flex-row gap-5 p-4">
+          <div className="w-1/2">
+            <div className="flex flex-col">
+              <fieldset id="sections">
+                <div className="grid grid-flow-col grid-rows-4 gap-4">
+                  {checkboxesData.map(
+                    ({ IdGroup, Price, Group, Title, Text }, index) => (
+                      <Checkbox
+                        key={index}
+                        id={IdGroup}
+                        value={Price}
+                        name={Group}
+                        label={Title}
+                        onChange={() => handleCheckboxChange(IdGroup, Price)}
+                      >
+                        {Text}
+                      </Checkbox>
+                    ),
+                  )}
+                </div>
+              </fieldset>
+
+              <div className="h-1 w-full bg-black" />
+
+              <fieldset id="domain">
+                <div>
+                  <input
+                    type="radio"
+                    id="Footer"
+                    value={50}
+                    name="domain"
+                    onChange={() => handleRadioChange('domain', 'Sim')}
+                  />
+                  <label htmlFor="Footer">Sim</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    id="Footer"
+                    value={50}
+                    name="domain"
+                    onChange={() => handleRadioChange('domain', 'Não')}
+                  />
+                  <label htmlFor="Footer">Não</label>
+                </div>
+              </fieldset>
+
+              <div className="h-1 w-full bg-black" />
+
+              <fieldset id="hosting">
+                <div>
+                  <input
+                    type="radio"
+                    id="Footer"
+                    value={50}
+                    name="hosting"
+                    onChange={() => handleRadioChange('radio', 'Sim')}
+                  />
+                  <label htmlFor="Footer">Sim</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    id="Footer"
+                    value={50}
+                    name="hosting"
+                    onChange={() => handleRadioChange('radio', 'Não')}
+                  />
+                  <label htmlFor="Footer">Não</label>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+          <div className="w-1/2 bg-red-400">
+            <h2>Itens Selecionados:</h2>
+            <ul>
+              {selectedItems.map((item) => (
+                <li key={item.id}>{item.id}</li>
+              ))}
+            </ul>
+            <h2>Total: R$ {totalValue.toFixed(2)}</h2>
+          </div>
         </div>
-        <div className="flex w-full max-w-7xl flex-col justify-center gap-5 p-4 md:flex-row">
-          <form>
-            <fieldset id="sections">
-              <div>
-                <Checkbox
-                  type="checkbox"
-                  id="Main"
-                  value={50}
-                  name="sections"
-                  multiple
-                  label="Seção principal"
-                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pharetra elementum iaculis. Quisque tempor viverra varius. Duis et aliquet ligula. "
-                />
-                <input
-                  type="checkbox"
-                  id="Main"
-                  value={50}
-                  name="sections"
-                  multiple
-                />
-                <label htmlFor="Main">Seção principal</label>
-              </div>
-              <div>
-                <input
-                  type="checkbox"
-                  id="About"
-                  value={50}
-                  name="sections"
-                  multiple
-                />
-                <label htmlFor="About">Sobre</label>
-              </div>
-              <div>
-                <input
-                  type="checkbox"
-                  id="Team"
-                  value={50}
-                  name="sections"
-                  multiple
-                />
-                <label htmlFor="Team">Time</label>
-              </div>
-              <div>
-                <input
-                  type="checkbox"
-                  id="Product"
-                  value={50}
-                  name="sections"
-                  multiple
-                />
-                <label htmlFor="Product">Produto</label>
-              </div>
-              <div>
-                <input
-                  type="checkbox"
-                  id="Localization"
-                  value={50}
-                  name="sections"
-                  multiple
-                />
-                <label htmlFor="Localization">Localização</label>
-              </div>
-              <div>
-                <input
-                  type="checkbox"
-                  id="Footer"
-                  value={50}
-                  name="sections"
-                  multiple
-                />
-                <label htmlFor="Footer">Rodapé</label>
-              </div>
-            </fieldset>
-
-            <div className="h-1 w-full bg-black" />
-
-            <fieldset id="domain">
-              <div>
-                <input type="radio" id="Footer" value={50} name="domain" />
-                <label htmlFor="Footer">Sim</label>
-              </div>
-              <div>
-                <input type="radio" id="Footer" value={50} name="domain" />
-                <label htmlFor="Footer">Não</label>
-              </div>
-            </fieldset>
-
-            <div className="h-1 w-full bg-black" />
-
-            <fieldset id="hosting">
-              <div>
-                <input type="radio" id="Footer" value={50} name="hosting" />
-                <label htmlFor="Footer">Sim</label>
-              </div>
-              <div>
-                <input type="radio" id="Footer" value={50} name="hosting" />
-                <label htmlFor="Footer">Não</label>
-              </div>
-            </fieldset>
-          </form>
-        </div>
-      </div>
+      </form>
     </section>
   )
 }

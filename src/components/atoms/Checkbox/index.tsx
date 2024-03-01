@@ -3,7 +3,7 @@ import { cn } from '@/services/utils/className'
 import { useState } from 'react'
 import { IoAddCircle, IoRemoveCircleSharp } from 'react-icons/io5'
 
-const Checkbox = ({ text, label, ...props }: InputType) => {
+const Checkbox = ({ children, label, ...props }: InputType) => {
   const [isExpanded, setIsExpanded] = useState(false)
 
   const handleButtonClick = () => {
@@ -14,14 +14,23 @@ const Checkbox = ({ text, label, ...props }: InputType) => {
     <div
       className={cn(
         `flex w-64 flex-col rounded-xl duration-200 ${
-          isExpanded ? 'h-28' : ''
+          isExpanded ? 'h-28' : 'h-[41px]'
         }`,
       )}
     >
-      <div className="flex justify-around rounded-xl bg-blue-500 py-2">
+      <div
+        className={cn(
+          `flex justify-around  bg-blue-700 py-2 ${
+            isExpanded ? 'rounded-t-xl' : 'rounded-xl'
+          }`,
+        )}
+      >
         <div className="flex gap-x-3">
           <input type="checkbox" {...props} />
-          <label htmlFor={props.id} className="text-black">
+          <label
+            htmlFor={props.id}
+            className="text-lg font-semibold text-white"
+          >
             {label}
           </label>
         </div>
@@ -35,12 +44,12 @@ const Checkbox = ({ text, label, ...props }: InputType) => {
       </div>
       <div
         className={cn(
-          `flex break-all text-base text-red-600 ${
+          `flex break-all bg-blue-600 p-3 text-base font-light text-white duration-500 ${
             isExpanded ? 'visible opacity-100' : 'collapse opacity-0'
           }`,
         )}
       >
-        {text}
+        {children}
       </div>
     </div>
   )
