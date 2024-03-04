@@ -1,12 +1,21 @@
-import { FaPlane, FaBuilding, FaFile } from 'react-icons/fa'
-import { GiCapybara } from 'react-icons/gi'
 import { Checkbox } from '@/components/atoms'
 import { useEffect, useState } from 'react'
 import { checkboxesData } from '@/components/models/Form'
 
 const Budget = () => {
-  const [selectedItems, setSelectedItems] = useState([])
+  const [selectedItems, setSelectedItems] = useState<
+    { id: string; value: number }[]
+  >([])
+
   const [totalValue, setTotalValue] = useState(0)
+
+  const sendAlert = (e: { preventDefault: () => void }) => {
+    e.preventDefault()
+
+    alert(
+      `Itens selecionados: ${selectedItems.map((item) => item.id).join(', ')}`,
+    )
+  }
 
   const handleCheckboxChange = (id: string, value: number) => {
     const selectedItemIndex = selectedItems.findIndex((item) => item.id === id)
@@ -21,7 +30,6 @@ const Budget = () => {
   }
 
   const handleRadioChange = (name: string, value: string) => {
-    // Handling radio button change (similar logic as checkboxes)
     const selectedRadioIndex = selectedItems.findIndex(
       (item) => item.id === name,
     )
@@ -47,9 +55,12 @@ const Budget = () => {
 
   return (
     <section className="w-[100vw] bg-slate-700">
-      <form className="flex h-full w-full items-center justify-center">
+      <form
+        className="flex h-full w-full items-center justify-center"
+        onSubmit={sendAlert}
+      >
         <div className="flex w-full max-w-7xl flex-row gap-5 p-4">
-          <div className="w-1/2">
+          <div className="w-1/2 border-r-4">
             <div className="flex flex-col">
               <fieldset id="sections">
                 <div className="grid grid-flow-col grid-rows-4 gap-4">
@@ -79,7 +90,7 @@ const Budget = () => {
                     id="Footer"
                     value={50}
                     name="domain"
-                    onChange={() => handleRadioChange('domain', 'Sim')}
+                    onChange={() => handleRadioChange('Dominio', 'Sim')}
                   />
                   <label htmlFor="Footer">Sim</label>
                 </div>
@@ -89,7 +100,7 @@ const Budget = () => {
                     id="Footer"
                     value={50}
                     name="domain"
-                    onChange={() => handleRadioChange('domain', 'Não')}
+                    onChange={() => handleRadioChange('Dominio', 'Não')}
                   />
                   <label htmlFor="Footer">Não</label>
                 </div>
@@ -104,7 +115,7 @@ const Budget = () => {
                     id="Footer"
                     value={50}
                     name="hosting"
-                    onChange={() => handleRadioChange('radio', 'Sim')}
+                    onChange={() => handleRadioChange('Hospedagem', 'Sim')}
                   />
                   <label htmlFor="Footer">Sim</label>
                 </div>
@@ -114,14 +125,14 @@ const Budget = () => {
                     id="Footer"
                     value={50}
                     name="hosting"
-                    onChange={() => handleRadioChange('radio', 'Não')}
+                    onChange={() => handleRadioChange('Hospedagem', 'Não')}
                   />
                   <label htmlFor="Footer">Não</label>
                 </div>
               </fieldset>
             </div>
           </div>
-          <div className="w-1/2 bg-red-400">
+          <div className="w-1/2 border-l-4 bg-red-400">
             <h2>Itens Selecionados:</h2>
             <ul>
               {selectedItems.map((item) => (
@@ -129,6 +140,8 @@ const Budget = () => {
               ))}
             </ul>
             <h2>Total: R$ {totalValue.toFixed(2)}</h2>
+
+            <button type="submit">enviar</button>
           </div>
         </div>
       </form>
