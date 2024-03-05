@@ -1,6 +1,10 @@
+'use client'
+
+import { PDFDownloadLink } from '@react-pdf/renderer'
 import { Checkbox } from '@/components/atoms'
 import { useEffect, useState } from 'react'
 import { checkboxesData } from '@/components/models/Form'
+import RenderPdf from '@/components/atoms/RenderPdf'
 
 const Budget = () => {
   const [selectedItems, setSelectedItems] = useState<
@@ -54,13 +58,13 @@ const Budget = () => {
   }, [selectedItems])
 
   return (
-    <section className="w-[100vw] bg-slate-700">
+    <section className="w-[100vw] bg-[#232434]">
       <form
         className="flex h-full w-full items-center justify-center"
         onSubmit={sendAlert}
       >
-        <div className="flex w-full max-w-7xl flex-row gap-5 p-4">
-          <div className="w-1/2 border-r-4">
+        <div className="flex w-full max-w-7xl flex-col items-center justify-center gap-5 p-4 lg:flex-row">
+          <div className="flex w-1/2 justify-center rounded-xl border-2 border-purple-600 bg-[#1B1C2C]">
             <div className="flex flex-col">
               <fieldset id="sections">
                 <div className="grid grid-flow-col grid-rows-4 gap-4">
@@ -132,7 +136,7 @@ const Budget = () => {
               </fieldset>
             </div>
           </div>
-          <div className="w-1/2 border-l-4 bg-red-400">
+          <div className="flex h-full w-1/2 flex-col items-center rounded-xl border-2 border-purple-600 bg-[#1B1C2C]">
             <h2>Itens Selecionados:</h2>
             <ul>
               {selectedItems.map((item) => (
@@ -140,8 +144,26 @@ const Budget = () => {
               ))}
             </ul>
             <h2>Total: R$ {totalValue.toFixed(2)}</h2>
+            <div className="flex flex-col gap-y-3 px-12">
+              <PDFDownloadLink
+                document={<RenderPdf data={selectedItems} />}
+                fileName="Orçamento Andrômeda.pdf"
+              >
+                <button
+                  type="button"
+                  className="rounded-xl bg-red-600 p-3 font-semibold"
+                >
+                  Imprimir orçamento
+                </button>
+              </PDFDownloadLink>
 
-            <button type="submit">enviar</button>
+              <button
+                type="submit"
+                className="rounded-xl bg-red-600 p-3 font-semibold"
+              >
+                enviar
+              </button>
+            </div>
           </div>
         </div>
       </form>

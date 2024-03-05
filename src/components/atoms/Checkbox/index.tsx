@@ -14,7 +14,7 @@ const Checkbox = ({ children, label, ...props }: InputType) => {
     <div
       className={cn(
         `flex w-64 flex-col rounded-xl duration-200 ${
-          isExpanded ? 'h-28' : 'h-[41px]'
+          isExpanded ? 'h-38' : 'h-[41px]'
         }`,
       )}
     >
@@ -34,7 +34,7 @@ const Checkbox = ({ children, label, ...props }: InputType) => {
             {label}
           </label>
         </div>
-        <button onClick={handleButtonClick}>
+        <button type="button" onClick={handleButtonClick}>
           {isExpanded ? (
             <IoRemoveCircleSharp size={25} />
           ) : (
