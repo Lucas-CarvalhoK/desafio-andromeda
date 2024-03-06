@@ -75,13 +75,17 @@ const Budget = () => {
                 </div>
                 <div className="grid grid-flow-col grid-rows-4 gap-4">
                   {checkboxesData.map(
-                    ({ IdGroup, Price, Group, Title, Text }, index) => (
+                    (
+                      { IdGroup, Price, Group, Title, Text, isDisable },
+                      index,
+                    ) => (
                       <Checkbox
                         key={index}
                         id={IdGroup}
                         value={Price}
                         name={Group}
                         label={Title}
+                        disabled={isDisable}
                         onChange={() => handleCheckboxChange(IdGroup, Price)}
                       >
                         {Text}

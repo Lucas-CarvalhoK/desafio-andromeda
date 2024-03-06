@@ -4,6 +4,7 @@ type CheckboxType = {
   Group: string
   Title: string
   Text: string
+  isDisable: boolean
 }
 
 export const checkboxesData: CheckboxType[] = [
@@ -13,6 +14,7 @@ export const checkboxesData: CheckboxType[] = [
     Group: 'sections',
     Title: 'Seção principal',
     Text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit Curabitur pharetra elementum iaculis. Quisque tempor viverravarius. Duis et aliquet ligula.',
+    isDisable: true,
   },
   {
     IdGroup: 'About',
@@ -20,6 +22,7 @@ export const checkboxesData: CheckboxType[] = [
     Group: 'sections',
     Title: 'Seção Sobre',
     Text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit Curabitur pharetra elementum iaculis. Quisque tempor viverravarius. Duis et aliquet ligula.',
+    isDisable: false,
   },
   {
     IdGroup: 'Team',
@@ -27,6 +30,7 @@ export const checkboxesData: CheckboxType[] = [
     Group: 'sections',
     Title: 'Seção Time',
     Text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit Curabitur pharetra elementum iaculis. Quisque tempor viverravarius. Duis et aliquet ligula.',
+    isDisable: false,
   },
   {
     IdGroup: 'Contact',
@@ -34,6 +38,7 @@ export const checkboxesData: CheckboxType[] = [
     Group: 'sections',
     Title: 'Seção Contato',
     Text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit Curabitur pharetra elementum iaculis. Quisque tempor viverravarius. Duis et aliquet ligula.',
+    isDisable: false,
   },
   {
     IdGroup: 'Project',
@@ -41,6 +46,7 @@ export const checkboxesData: CheckboxType[] = [
     Group: 'sections',
     Title: 'Seção Projetos',
     Text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit Curabitur pharetra elementum iaculis. Quisque tempor viverravarius. Duis et aliquet ligula.',
+    isDisable: false,
   },
   {
     IdGroup: 'Product',
@@ -48,6 +54,7 @@ export const checkboxesData: CheckboxType[] = [
     Group: 'sections',
     Title: 'Seção Produtos',
     Text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit Curabitur pharetra elementum iaculis. Quisque tempor viverravarius. Duis et aliquet ligula.',
+    isDisable: false,
   },
   {
     IdGroup: 'Service',
@@ -55,6 +62,7 @@ export const checkboxesData: CheckboxType[] = [
     Group: 'sections',
     Title: 'Seção Serviço',
     Text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit Curabitur pharetra elementum iaculis. Quisque tempor viverravarius. Duis et aliquet ligula.',
+    isDisable: false,
   },
   {
     IdGroup: 'Footer',
@@ -62,5 +70,6 @@ export const checkboxesData: CheckboxType[] = [
     Group: 'sections',
     Title: 'Seção Rodapé',
     Text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit Curabitur pharetra elementum iaculis. Quisque tempor viverravarius. Duis et aliquet ligula.',
+    isDisable: true,
   },
 ]
