@@ -64,9 +64,15 @@ const Budget = () => {
         onSubmit={sendAlert}
       >
         <div className="flex w-full max-w-7xl flex-col items-center justify-center gap-5 p-4 lg:flex-row">
-          <div className="flex w-1/2 justify-center rounded-xl border-2 border-purple-600 bg-[#1B1C2C]">
+          <div className="flex justify-center rounded-xl border-2 border-purple-600 bg-[#1B1C2C] p-6 lg:w-1/2">
             <div className="flex flex-col">
               <fieldset id="sections">
+                <div className="mb-6 w-full">
+                  <h2 className="text-center text-3xl font-semibold">Seções</h2>
+                  <h4 className="text-center text-lg">
+                    Selecione as seções de deseja em sua landing page
+                  </h4>
+                </div>
                 <div className="grid grid-flow-col grid-rows-4 gap-4">
                   {checkboxesData.map(
                     ({ IdGroup, Price, Group, Title, Text }, index) => (
@@ -85,53 +91,92 @@ const Budget = () => {
                 </div>
               </fieldset>
 
-              <div className="h-1 w-full bg-black" />
+              <div className="my-7 h-1 w-full bg-purple-600" />
+              <h2 className="mb-6 text-center text-3xl font-semibold">
+                Domínio
+              </h2>
 
               <fieldset id="domain">
-                <div>
-                  <input
-                    type="radio"
-                    id="Footer"
-                    value={50}
-                    name="domain"
-                    onChange={() => handleRadioChange('Dominio', 'Sim')}
-                  />
-                  <label htmlFor="Footer">Sim</label>
-                </div>
-                <div>
-                  <input
-                    type="radio"
-                    id="Footer"
-                    value={50}
-                    name="domain"
-                    onChange={() => handleRadioChange('Dominio', 'Não')}
-                  />
-                  <label htmlFor="Footer">Não</label>
+                <div className="flex flex-col justify-between gap-y-6">
+                  <p className="text-center">
+                    O domínio de um site é o endereço exclusivo que as pessoas
+                    digitam em seus navegadores para acessar um site específico
+                    na internet. Ele consiste em duas partes principais: o nome
+                    de domínio (como "meusite") e a extensão de domínio (como
+                    ".com"). Escolher um domínio único e memorável é crucial
+                    para estabelecer uma identidade online eficaz. Além disso, o
+                    domínio pode influenciar a visibilidade nos motores de
+                    busca. Considerar a relevância e facilidade de memorização
+                    ao escolher um domínio é importante para garantir uma
+                    presença online distintiva.
+                  </p>
+                  <div className="flex justify-around">
+                    <div>
+                      <input
+                        type="radio"
+                        id="Footer"
+                        value={50}
+                        name="domain"
+                        onChange={() => handleRadioChange('Dominio', 'Sim')}
+                      />
+                      <label htmlFor="Footer">Sim</label>
+                    </div>
+                    <div>
+                      <input
+                        type="radio"
+                        id="Footer"
+                        value={50}
+                        name="domain"
+                        onChange={() => handleRadioChange('Dominio', 'Não')}
+                      />
+                      <label htmlFor="Footer">Não</label>
+                    </div>
+                  </div>
                 </div>
               </fieldset>
 
-              <div className="h-1 w-full bg-black" />
+              <div className="my-7 h-1 w-full bg-purple-600" />
+              <h2 className="mb-6 text-center text-3xl font-semibold">
+                Hospedagem
+              </h2>
 
               <fieldset id="hosting">
-                <div>
-                  <input
-                    type="radio"
-                    id="Footer"
-                    value={50}
-                    name="hosting"
-                    onChange={() => handleRadioChange('Hospedagem', 'Sim')}
-                  />
-                  <label htmlFor="Footer">Sim</label>
-                </div>
-                <div>
-                  <input
-                    type="radio"
-                    id="Footer"
-                    value={50}
-                    name="hosting"
-                    onChange={() => handleRadioChange('Hospedagem', 'Não')}
-                  />
-                  <label htmlFor="Footer">Não</label>
+                <div className="flex flex-col justify-between gap-y-6">
+                  <p className="text-center">
+                    Um serviço de hospedagem de site é uma solução que oferece
+                    espaço em servidores conectados à internet para armazenar e
+                    disponibilizar os arquivos de um site. Esses serviços
+                    garantem a acessibilidade do site online e podem incluir
+                    recursos como registros de domínio, contas de e-mail e
+                    suporte técnico. Escolher um provedor confiável é essencial
+                    para garantir a estabilidade e o desempenho do site. Em
+                    resumo, a hospedagem de site é fundamental para tornar um
+                    site acessível na web, proporcionando os recursos
+                    necessários para seu funcionamento contínuo.
+                  </p>
+                  <div className="flex justify-around">
+                    <div>
+                      <input
+                        type="radio"
+                        id="Footer"
+                        value={50}
+                        name="hosting"
+                        onChange={() => handleRadioChange('Hospedagem', 'Sim')}
+                        className="default:ring-2 checked:bg-red-700"
+                      />
+                      <label htmlFor="Footer">Sim</label>
+                    </div>
+                    <div>
+                      <input
+                        type="radio"
+                        id="Footer"
+                        value={50}
+                        name="hosting"
+                        onChange={() => handleRadioChange('Hospedagem', 'Não')}
+                      />
+                      <label htmlFor="Footer">Não</label>
+                    </div>
+                  </div>
                 </div>
               </fieldset>
             </div>

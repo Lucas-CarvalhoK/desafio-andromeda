@@ -13,14 +13,14 @@ const Checkbox = ({ children, label, ...props }: InputType) => {
   return (
     <div
       className={cn(
-        `flex w-64 flex-col rounded-xl duration-200 ${
+        `flex w-fit flex-col rounded-xl duration-200 ${
           isExpanded ? 'h-38' : 'h-[41px]'
         }`,
       )}
     >
       <div
         className={cn(
-          `flex justify-around  bg-blue-700 py-2 ${
+          `flex justify-between bg-[#E800CF]  px-4 py-2 ${
             isExpanded ? 'rounded-t-xl' : 'rounded-xl'
           }`,
         )}
@@ -44,7 +44,7 @@ const Checkbox = ({ children, label, ...props }: InputType) => {
       </div>
       <div
         className={cn(
-          `flex break-all bg-blue-600 p-3 text-base font-light text-white duration-500 ${
+          `flex break-all bg-[#55154f] p-3 text-base font-light text-white duration-500 ${
             isExpanded ? 'visible opacity-100' : 'collapse opacity-0'
           }`,
         )}
