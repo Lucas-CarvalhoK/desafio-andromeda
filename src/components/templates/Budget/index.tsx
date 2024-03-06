@@ -162,7 +162,7 @@ const Budget = () => {
                         value={50}
                         name="hosting"
                         onChange={() => handleRadioChange('Hospedagem', 'Sim')}
-                        className="default:ring-2 checked:bg-red-700"
+                        className=""
                       />
                       <label htmlFor="Footer">Sim</label>
                     </div>
@@ -181,22 +181,44 @@ const Budget = () => {
               </fieldset>
             </div>
           </div>
-          <div className="flex h-full w-1/2 flex-col items-center rounded-xl border-2 border-purple-600 bg-[#1B1C2C]">
-            <h2>Itens Selecionados:</h2>
-            <ul>
-              {selectedItems.map((item) => (
-                <li key={item.id}>{item.id}</li>
-              ))}
-            </ul>
-            <h2>Total: R$ {totalValue.toFixed(2)}</h2>
-            <div className="flex flex-col gap-y-3 px-12">
+          <div className="flex h-full w-1/2 flex-col items-center rounded-xl border-2 border-purple-600 bg-[#1B1C2C] p-6">
+            <h2 className="text-center text-3xl font-semibold">
+              Itens Selecionados
+            </h2>
+            <div className="my-7 h-1 w-full bg-purple-600" />
+
+            <table className="w-full table-auto">
+              <thead>
+                <tr>
+                  <th>Descrição</th>
+                  <th>Valor</th>
+                </tr>
+              </thead>
+              <tbody>
+                {selectedItems.map((item) => (
+                  <tr key={item.id} className="border border-purple-600">
+                    <td className="text-center">{item.id}</td>
+                    <td className="border-l border-purple-600 text-center">
+                      R$ {item.value}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <div className="my-7 h-1 w-full bg-purple-600" />
+
+            <h2 className="rounded-xl border border-purple-600 p-4 text-center text-3xl font-semibold">
+              Total: R$ {totalValue.toFixed(2)}
+            </h2>
+            <div className="flex flex-col gap-3 px-12 lg:flex-row lg:p-5">
               <PDFDownloadLink
                 document={<RenderPdf data={selectedItems} />}
                 fileName="Orçamento Andrômeda.pdf"
               >
                 <button
                   type="button"
-                  className="rounded-xl bg-red-600 p-3 font-semibold"
+                  className="min-w-[170px] rounded-xl bg-red-600 p-3 font-semibold"
                 >
                   Imprimir orçamento
                 </button>
@@ -204,7 +226,7 @@ const Budget = () => {
 
               <button
                 type="submit"
-                className="rounded-xl bg-red-600 p-3 font-semibold"
+                className="min-w-[170px] rounded-xl bg-red-600 p-3 font-semibold"
               >
                 enviar
               </button>
