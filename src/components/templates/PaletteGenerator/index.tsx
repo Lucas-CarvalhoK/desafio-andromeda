@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { DomainCheck } from '@/services/apis/WHOIS'
 import { cn } from '@/services/utils/className'
+import { HSLToHex } from '@/services/utils/HsltoHex'
 // import { formatHex } from 'https://cdn.skypack.dev/culori@2.0.0'
 
 const PaletteGenerator = () => {
@@ -31,15 +32,12 @@ const PaletteGenerator = () => {
         c: baseColor.c,
         h: adjustHue(baseColor.h + step),
         mode: 'lch',
+        Hex: HSLToHex(adjustHue(baseColor.h + step), baseColor.c, baseColor.l),
       }))
     }
-
-    console.log('====================================')
     console.log(palettes)
-    console.log('====================================')
     return palettes
   }
-  // const triadicHex = palettes.triadic.map((colorLCH) => formatHex(colorLCH))
 
   function randomHsl() {
     const l = Math.floor(Math.random() * 100)
@@ -65,12 +63,12 @@ const PaletteGenerator = () => {
 
           <button
             className="w-fit rounded-xl bg-[#E800CF] p-3 font-semibold"
-            onClick={() => createScientificPalettes(randomHsl())}
+            onClick={() => setPalettes(createScientificPalettes(randomHsl()))}
           >
             gerar paleta
           </button>
         </div>
-        <div className="flex h-[100vh] w-full flex-col items-center justify-center">
+        <div className="flex w-full flex-col items-center justify-center">
           <div className="flex flex-row items-center gap-x-2 rounded-xl border-2 border-purple-600 bg-[#1B1C2C] p-6">
             {Object.keys(palettes).map((paletteName) => (
               <div
@@ -81,9 +79,10 @@ const PaletteGenerator = () => {
                 {palettes[paletteName].map((color, index) => (
                   <div
                     key={index}
-                    className={cn(
-                      `h-48 w-32 bg-[color:hsl(${color.h},${color.c},${color.l})]`,
-                    )}
+                    className={cn(`h-48 w-32 border border-red-600`)}
+                    style={{
+                      backgroundColor: color.Hex,
+                    }}
                   />
                 ))}
               </div>
