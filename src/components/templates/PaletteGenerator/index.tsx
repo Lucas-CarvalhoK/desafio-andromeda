@@ -1,9 +1,8 @@
 'use client'
-
 import { useState } from 'react'
-import { DomainCheck } from '@/services/apis/WHOIS'
 import { cn } from '@/services/utils/className'
 import { HSLToHex } from '@/services/utils/HsltoHex'
+import ColorBox from '@/components/atoms/ColorBox'
 // import { formatHex } from 'https://cdn.skypack.dev/culori@2.0.0'
 
 const PaletteGenerator = () => {
@@ -32,6 +31,7 @@ const PaletteGenerator = () => {
         c: baseColor.c,
         h: adjustHue(baseColor.h + step),
         mode: 'lch',
+        // Hsl: ${`(adjustHue(baseColor.h + step), baseColor.c, baseColor.l)`},
         Hex: HSLToHex(adjustHue(baseColor.h + step), baseColor.c, baseColor.l),
       }))
     }
@@ -65,28 +65,40 @@ const PaletteGenerator = () => {
             className="w-fit rounded-xl bg-[#E800CF] p-3 font-semibold"
             onClick={() => setPalettes(createScientificPalettes(randomHsl()))}
           >
-            gerar paleta
+            Gerar Paleta aleatória
           </button>
+          <div className="flex w-full flex-col items-center gap-y-3">
+            <span className="font-semibold">Tente com uma cor específica</span>
+            <input
+              placeholder="Insira um hexadecial"
+              className={cn(
+                `h-10 w-full rounded-lg border-2 border-purple-600 bg-[#232434] px-3 text-white`,
+              )}
+            />
+          </div>
         </div>
         <div className="flex w-full flex-col items-center justify-center">
-          <div className="flex flex-row items-center gap-x-2 rounded-xl border-2 border-purple-600 bg-[#1B1C2C] p-6">
+          <div className="grid grid-cols-2 grid-rows-3 gap-5 gap-x-2 rounded-xl border-2 border-purple-600 bg-[#1B1C2C] p-6">
             {Object.keys(palettes).map((paletteName) => (
               <div
                 key={paletteName}
-                className="flex flex-col items-center gap-y-2"
+                className="flex flex-col items-center gap-y-2 border-2 border-[#FFFFFF50] p-2"
               >
                 <span>{paletteName}</span>
-                {palettes[paletteName].map((color, index) => (
-                  <div
-                    key={index}
-                    className={cn(`h-48 w-32 border border-red-600`)}
-                    style={{
-                      backgroundColor: color.Hex,
-                    }}
-                  />
-                ))}
+                <div className="flex gap-x-3">
+                  {palettes[paletteName].map((color, index) => (
+                    <ColorBox
+                      key={index}
+                      background={color.Hex}
+                      HexString={color.Hex}
+                    />
+                  ))}
+                </div>
               </div>
             ))}
+            <div className="flex flex-col items-center gap-y-2 border-2 border-[#FFFFFF50] p-2">
+              <span>Customizada</span>
+            </div>
           </div>
         </div>
       </div>
