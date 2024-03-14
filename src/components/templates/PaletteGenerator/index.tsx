@@ -2,11 +2,13 @@
 import { useState } from 'react'
 import { cn } from '@/services/utils/className'
 import { HSLToHex } from '@/services/utils/HsltoHex'
+import { hexToHSL } from '@/services/utils/HextoHsl'
 import ColorBox from '@/components/atoms/ColorBox'
-// import { formatHex } from 'https://cdn.skypack.dev/culori@2.0.0'
+import { ChromePicker } from 'react-color'
 
 const PaletteGenerator = () => {
   const [palettes, setPalettes] = useState({})
+  const [hexValue, setHexValue] = useState('')
 
   const adjustHue = (val: number) => {
     if (val < 0) val += Math.ceil(-val / 360) * 360
@@ -15,6 +17,9 @@ const PaletteGenerator = () => {
   }
 
   function createScientificPalettes(baseColor) {
+    console.log('====================================')
+    console.log(baseColor)
+    console.log('====================================')
     const targetHueSteps = {
       analogous: [0, 30, 60],
       triadic: [0, 120, 240],
@@ -52,6 +57,15 @@ const PaletteGenerator = () => {
     }
   }
 
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    hexToHSL(hexValue)
+  }
+
+  const handleInputChange = (event) => {
+    setHexValue(event.target.value)
+  }
+
   return (
     <section className="w-[100vw] bg-[#232434]">
       <div className="flex h-[100vh] w-full flex-col items-center justify-center">
@@ -62,19 +76,31 @@ const PaletteGenerator = () => {
           <div className="my-3 h-1 w-full bg-purple-600" />
 
           <button
+            type="button"
             className="w-fit rounded-xl bg-[#E800CF] p-3 font-semibold"
             onClick={() => setPalettes(createScientificPalettes(randomHsl()))}
           >
-            Gerar Paleta aleatória
+            Gerar paleta aleatória
           </button>
           <div className="flex w-full flex-col items-center gap-y-3">
-            <span className="font-semibold">Tente com uma cor específica</span>
-            <input
-              placeholder="Insira um hexadecial"
-              className={cn(
-                `h-10 w-full rounded-lg border-2 border-purple-600 bg-[#232434] px-3 text-white`,
-              )}
-            />
+            <form onSubmit={handleSubmit}>
+              <label htmlFor="HexColor" className="font-semibold">
+                Tente com uma cor específica
+              </label>
+              <input
+                id="HexColor"
+                placeholder="Insira um hexadecimal"
+                value={hexValue}
+                onChange={handleInputChange}
+                className={`h-10 w-full rounded-lg border-2 border-purple-600 bg-[#232434] px-3 text-white`}
+              />
+              <button
+                type="submit"
+                className="w-fit rounded-xl bg-[#E800CF] p-3 font-semibold"
+              >
+                Enviar
+              </button>
+            </form>
           </div>
         </div>
         <div className="flex w-full flex-col items-center justify-center">
@@ -101,6 +127,7 @@ const PaletteGenerator = () => {
             </div>
           </div>
         </div>
+        <ChromePicker />
       </div>
     </section>
   )

@@ -1,3 +1,5 @@
+import { log } from 'console'
+
 interface HSL {
   h: number
   s: number
@@ -47,5 +49,10 @@ export function hexToHSL(H: string): {
   l = +(l * 100).toFixed(1)
 
   const hslString = 'hsl(' + h + ',' + s + '%,' + l + '%)'
+
+  console.log('====================================')
+  console.log(hslString)
+  console.log('====================================')
+
   return { hsl: hslString, h, s, l }
 }
