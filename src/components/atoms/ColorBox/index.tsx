@@ -1,5 +1,6 @@
 import { ColorBoxType } from './types'
 import { cn } from '@/services/utils/className'
+import { ChromePicker } from 'react-color'
 
 const ColorBox = ({ background, HexString, ...props }: ColorBoxType) => {
   const copyToClipboard = () => {
@@ -13,14 +14,21 @@ const ColorBox = ({ background, HexString, ...props }: ColorBoxType) => {
 
   return (
     <div
-      className={cn(`flex h-20 w-20 flex-col rounded-sm duration-200`)}
+      className={cn(
+        `flex h-20 w-20 flex-col items-center justify-center rounded-sm`,
+      )}
       {...props}
       style={{
         backgroundColor: background,
       }}
     >
-      <span className="text-lg font-semibold">{HexString}</span>
-      <button onClick={copyToClipboard}>Copiar</button>
+      <span className="text-base font-semibold">{HexString}</span>
+      <button
+        onClick={copyToClipboard}
+        className="text-sm active:text-[#FFFFFF50]"
+      >
+        Copiar
+      </button>
     </div>
   )
 }

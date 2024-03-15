@@ -1,10 +1,10 @@
 'use client'
-import { useState } from 'react'
+import { SetStateAction, useState } from 'react'
 import { cn } from '@/services/utils/className'
 import { HSLToHex } from '@/services/utils/HsltoHex'
-import { hexToHSL } from '@/services/utils/HextoHsl'
+import { hexToRGB } from '@/services/utils/HextoRGB'
+import { RgbToHsl } from '@/services/utils/RGBtoHsl'
 import ColorBox from '@/components/atoms/ColorBox'
-import { ChromePicker } from 'react-color'
 
 const PaletteGenerator = () => {
   const [palettes, setPalettes] = useState({})
@@ -17,9 +17,6 @@ const PaletteGenerator = () => {
   }
 
   function createScientificPalettes(baseColor) {
-    console.log('====================================')
-    console.log(baseColor)
-    console.log('====================================')
     const targetHueSteps = {
       analogous: [0, 30, 60],
       triadic: [0, 120, 240],
@@ -57,18 +54,30 @@ const PaletteGenerator = () => {
     }
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault()
-    hexToHSL(hexValue)
+
+    const { r, g, b } = hexToRGB(hexValue)
+    const { h, s, l } = RgbToHsl(r, g, b)
+
+    const hslString = {
+      l,
+      c: s,
+      h,
+      mode: 'lch',
+    }
+    setPalettes(createScientificPalettes(hslString))
   }
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: {
+    target: { value: SetStateAction<string> }
+  }) => {
     setHexValue(event.target.value)
   }
 
   return (
     <section className="w-[100vw] bg-[#232434]">
-      <div className="flex h-[100vh] w-full flex-col items-center justify-center">
+      <div className="flex h-[100vh] w-full flex-col items-center justify-center overflow-scroll">
         <div className="flex flex-col items-center gap-y-2 rounded-xl border-2 border-purple-600 bg-[#1B1C2C] p-6">
           <h1 className="text-center text-3xl font-semibold">
             Andrômeda Palette Generator
@@ -103,7 +112,13 @@ const PaletteGenerator = () => {
             </form>
           </div>
         </div>
-        <div className="flex w-full flex-col items-center justify-center">
+        <div
+          className={cn(
+            `flex w-full flex-col items-center justify-center ${
+              Object.keys(palettes).length === 0 ? 'hidden' : 'block'
+            }`,
+          )}
+        >
           <div className="grid grid-cols-2 grid-rows-3 gap-5 gap-x-2 rounded-xl border-2 border-purple-600 bg-[#1B1C2C] p-6">
             {Object.keys(palettes).map((paletteName) => (
               <div
@@ -127,7 +142,6 @@ const PaletteGenerator = () => {
             </div>
           </div>
         </div>
-        <ChromePicker />
       </div>
     </section>
   )
