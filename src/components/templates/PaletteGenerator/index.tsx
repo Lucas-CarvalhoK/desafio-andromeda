@@ -1,6 +1,7 @@
 'use client'
 import { SetStateAction, useState } from 'react'
 import { cn } from '@/services/utils/className'
+import { setContrastColor } from '@/services/utils/ColorContrast'
 import { HSLToHex } from '@/services/utils/HsltoHex'
 import { hexToRGB } from '@/services/utils/HextoRGB'
 import { RgbToHsl } from '@/services/utils/RGBtoHsl'
@@ -16,7 +17,12 @@ const PaletteGenerator = () => {
     return val % 360
   }
 
-  function createScientificPalettes(baseColor) {
+  function createScientificPalettes(baseColor: {
+    l: number
+    c: number
+    h: number
+    mode?: string
+  }) {
     const targetHueSteps = {
       analogous: [0, 30, 60],
       triadic: [0, 120, 240],
@@ -59,6 +65,7 @@ const PaletteGenerator = () => {
 
     const { r, g, b } = hexToRGB(hexValue)
     const { h, s, l } = RgbToHsl(r, g, b)
+    // setContrastColor(r, g, b)
 
     const hslString = {
       l,
@@ -77,69 +84,83 @@ const PaletteGenerator = () => {
 
   return (
     <section className="w-[100vw] bg-[#232434]">
-      <div className="flex h-[100vh] w-full flex-col items-center justify-center overflow-scroll">
+      <div className="grid h-[100vh] w-full grid-cols-2 grid-rows-1 items-center justify-center gap-4">
         <div className="flex flex-col items-center gap-y-2 rounded-xl border-2 border-purple-600 bg-[#1B1C2C] p-6">
-          <h1 className="text-center text-3xl font-semibold">
-            Andrômeda Palette Generator
-          </h1>
-          <div className="my-3 h-1 w-full bg-purple-600" />
-
-          <button
-            type="button"
-            className="w-fit rounded-xl bg-[#E800CF] p-3 font-semibold"
-            onClick={() => setPalettes(createScientificPalettes(randomHsl()))}
-          >
-            Gerar paleta aleatória
-          </button>
-          <div className="flex w-full flex-col items-center gap-y-3">
-            <form onSubmit={handleSubmit}>
-              <label htmlFor="HexColor" className="font-semibold">
-                Tente com uma cor específica
-              </label>
-              <input
-                id="HexColor"
-                placeholder="Insira um hexadecimal"
-                value={hexValue}
-                onChange={handleInputChange}
-                className={`h-10 w-full rounded-lg border-2 border-purple-600 bg-[#232434] px-3 text-white`}
-              />
-              <button
-                type="submit"
-                className="w-fit rounded-xl bg-[#E800CF] p-3 font-semibold"
+          <div className="flex flex-col items-center justify-center">
+            <h1 className="text-center text-3xl font-semibold">
+              Andrômeda Palette Generator
+            </h1>
+            <div className="my-3 h-1 w-full bg-purple-600" />
+            <div className="flex w-full flex-col gap-y-3">
+              <form
+                onSubmit={handleSubmit}
+                className="flex flex-col items-center justify-center"
               >
-                Enviar
-              </button>
-            </form>
+                {/* <label htmlFor="HexColor" className="font-semibold">
+                  Tente com uma cor específica
+                </label> */}
+                <input
+                  id="HexColor"
+                  placeholder="Insira um hexadecimal"
+                  value={hexValue}
+                  onChange={handleInputChange}
+                  className={`h-10 w-full rounded-lg border-2 border-purple-600 bg-[#232434] px-3 text-white`}
+                />
+                <div className="flex gap-x-3 py-3">
+                  <button
+                    type="submit"
+                    className="w-fit rounded-xl bg-[#E800CF] p-3 font-semibold"
+                  >
+                    Enviar
+                  </button>
+                  <button
+                    type="button"
+                    className="w-fit rounded-xl bg-[#E800CF] p-3 font-semibold"
+                    onClick={() =>
+                      setPalettes(createScientificPalettes(randomHsl()))
+                    }
+                  >
+                    Gerar paleta aleatória
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div
+            className={cn(
+              `flex w-full flex-col items-center justify-center ${
+                Object.keys(palettes).length === 0 ? 'hidden' : 'block'
+              }`,
+            )}
+          >
+            <div className="grid grid-cols-2 grid-rows-3 gap-5 gap-x-2 rounded-xl border-2 border-purple-600 bg-[#1B1C2C] p-6">
+              {Object.keys(palettes).map((paletteName) => (
+                <div
+                  key={paletteName}
+                  className="flex flex-col items-center gap-y-2 border-2 border-[#FFFFFF50] p-2"
+                >
+                  <span>{paletteName}</span>
+                  <div className="flex gap-x-3">
+                    {palettes[paletteName].map((color, index) => (
+                      <ColorBox
+                        key={index}
+                        background={color.Hex}
+                        HexString={color.Hex}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-        <div
-          className={cn(
-            `flex w-full flex-col items-center justify-center ${
-              Object.keys(palettes).length === 0 ? 'hidden' : 'block'
-            }`,
-          )}
-        >
-          <div className="grid grid-cols-2 grid-rows-3 gap-5 gap-x-2 rounded-xl border-2 border-purple-600 bg-[#1B1C2C] p-6">
-            {Object.keys(palettes).map((paletteName) => (
-              <div
-                key={paletteName}
-                className="flex flex-col items-center gap-y-2 border-2 border-[#FFFFFF50] p-2"
-              >
-                <span>{paletteName}</span>
-                <div className="flex gap-x-3">
-                  {palettes[paletteName].map((color, index) => (
-                    <ColorBox
-                      key={index}
-                      background={color.Hex}
-                      HexString={color.Hex}
-                    />
-                  ))}
-                </div>
-              </div>
-            ))}
-            <div className="flex flex-col items-center gap-y-2 border-2 border-[#FFFFFF50] p-2">
-              <span>Customizada</span>
-            </div>
+        <div className="flex flex-col rounded-xl border-2 border-purple-600 bg-[#1B1C2C] p-6">
+          <h2 className="text-center text-xl font-semibold">
+            Faça uma paleta customizada
+          </h2>
+          <div className="flex items-center gap-y-2 border-2 border-[#FFFFFF50] p-2">
+            <ColorBox />
           </div>
         </div>
       </div>
