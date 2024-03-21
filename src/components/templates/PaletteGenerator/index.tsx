@@ -43,7 +43,6 @@ const PaletteGenerator = () => {
         Hex: HSLToHex(adjustHue(baseColor.h + step), baseColor.c, baseColor.l),
       }))
     }
-    console.log(palettes)
     return palettes
   }
 

@@ -2,13 +2,19 @@ import { ColorBoxType } from './types'
 import { cn } from '@/services/utils/className'
 import { IoAdd } from 'react-icons/io5'
 import { HexColorPicker } from 'react-colorful'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const ColorBox = ({ background, HexString, ...props }: ColorBoxType) => {
-  const [color, setColor] = useState('#b32aa9')
+  const [color, setColor] = useState(background)
+  const [colorPickerOpen, setColorPickerOpen] = useState(false)
 
-  const ColorPick = () => {
-    return <HexColorPicker onChange={setColor} />
+  useEffect(() => {
+    // Update the background prop whenever color state changes
+    setColor(background)
+  }, [background])
+
+  const toggleColorPicker = () => {
+    setColorPickerOpen(!colorPickerOpen)
   }
 
   const copyToClipboard = () => {
@@ -18,6 +24,10 @@ const ColorBox = ({ background, HexString, ...props }: ColorBoxType) => {
     tempTextArea.select()
     document.execCommand('copy')
     document.body.removeChild(tempTextArea)
+  }
+
+  const handleColorChange = (newColor) => {
+    setColor(newColor) // Update color state
   }
 
   return (
@@ -30,21 +40,28 @@ const ColorBox = ({ background, HexString, ...props }: ColorBoxType) => {
         backgroundColor: background || 'transparent',
         border: background ? 'none' : '1px solid #FFFFFF50',
       }}
+      onClick={toggleColorPicker}
     >
       {background ? (
         <>
-          <span className="text-base font-semibold">{HexString}</span>
           <button
             onClick={copyToClipboard}
-            className="text-sm active:text-[#FFFFFF50]"
+            className="text-base font-semibold active:bg-red-500 active:text-[#FFFFFF50]"
           >
-            Copiar
+            {HexString}
           </button>
         </>
       ) : (
-        // <button onClick={}>
-        <IoAdd size={45} />
-        // </button>
+        <>
+          <IoAdd size={45} />
+        </>
+      )}
+      {colorPickerOpen && (
+        <HexColorPicker
+          className="h-64"
+          color={color}
+          onChange={handleColorChange}
+        />
       )}
     </div>
   )
