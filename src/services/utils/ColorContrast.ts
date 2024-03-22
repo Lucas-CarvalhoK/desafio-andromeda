@@ -1,15 +1,16 @@
-import { RgbaColor } from 'react-colorful'
+export function ContrastTextColor(hexColor: string) {
+  // Remove o '#' se estiver presente
+  hexColor = hexColor.replace('#', '')
 
-export function setContrastColor(color: RgbaColor) {
-  const yiq = (color.r * 299 + color.g * 587 + color.b * 114) / 1000
+  // Converte o hexadecimal para RGB
+  const r = parseInt(hexColor.substr(0, 2), 16)
+  const g = parseInt(hexColor.substr(2, 2), 16)
+  const b = parseInt(hexColor.substr(4, 2), 16)
 
-  let contrastColor
+  // Calcula a luminosidade usando a fórmula de luminosidade relativa
+  // https://www.w3.org/TR/WCAG20/#relativeluminancedef
+  const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b
 
-  if (yiq >= 128) {
-    contrastColor = '#000'
-  } else {
-    contrastColor = '#fff'
-  }
-
-  return contrastColor
+  // Retorna 'black' se a luminosidade for maior que 128, senão retorna 'white'
+  return luminance > 128 ? '#333333' : '#FFFFFF'
 }

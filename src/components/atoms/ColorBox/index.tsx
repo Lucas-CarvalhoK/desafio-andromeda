@@ -1,15 +1,15 @@
 import { ColorBoxType } from './types'
 import { cn } from '@/services/utils/className'
-import { IoAdd } from 'react-icons/io5'
+import { ContrastTextColor } from '@/services/utils/ColorContrast'
+import { IoIosColorFill } from 'react-icons/io'
 import { HexColorPicker } from 'react-colorful'
 import { useState, useEffect } from 'react'
 
 const ColorBox = ({ background, HexString, ...props }: ColorBoxType) => {
-  const [color, setColor] = useState(background)
+  const [color, setColor] = useState(background || 'transparent')
   const [colorPickerOpen, setColorPickerOpen] = useState(false)
 
   useEffect(() => {
-    // Update the background prop whenever color state changes
     setColor(background)
   }, [background])
 
@@ -19,7 +19,7 @@ const ColorBox = ({ background, HexString, ...props }: ColorBoxType) => {
 
   const copyToClipboard = () => {
     const tempTextArea = document.createElement('textarea')
-    tempTextArea.value = HexString
+    tempTextArea.value = color
     document.body.appendChild(tempTextArea)
     tempTextArea.select()
     document.execCommand('copy')
@@ -37,31 +37,20 @@ const ColorBox = ({ background, HexString, ...props }: ColorBoxType) => {
       )}
       {...props}
       style={{
-        backgroundColor: background || 'transparent',
-        border: background ? 'none' : '1px solid #FFFFFF50',
+        backgroundColor: color || 'transparent',
+        border: color ? 'none' : '1px solid #FFFFFF50',
       }}
       onClick={toggleColorPicker}
     >
-      {background ? (
-        <>
-          <button
-            onClick={copyToClipboard}
-            className="text-base font-semibold active:bg-red-500 active:text-[#FFFFFF50]"
-          >
-            {HexString}
-          </button>
-        </>
-      ) : (
-        <>
-          <IoAdd size={45} />
-        </>
-      )}
+      <button
+        onClick={copyToClipboard}
+        className="text-base font-semibold active:bg-red-500 active:text-[#FFFFFF50]"
+      >
+        {color || <IoIosColorFill size={30} />}
+      </button>
+
       {colorPickerOpen && (
-        <HexColorPicker
-          className="h-64"
-          color={color}
-          onChange={handleColorChange}
-        />
+        <HexColorPicker color={color} onChange={handleColorChange} />
       )}
     </div>
   )

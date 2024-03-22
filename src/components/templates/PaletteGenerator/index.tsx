@@ -10,6 +10,7 @@ import ColorBox from '@/components/atoms/ColorBox'
 const PaletteGenerator = () => {
   const [palettes, setPalettes] = useState({})
   const [hexValue, setHexValue] = useState('')
+  const [count, setCount] = useState(1)
 
   const adjustHue = (val: number) => {
     if (val < 0) val += Math.ceil(-val / 360) * 360
@@ -79,6 +80,12 @@ const PaletteGenerator = () => {
     target: { value: SetStateAction<string> }
   }) => {
     setHexValue(event.target.value)
+  }
+
+  const addColorBox = () => {
+    if (count < 10) {
+      setCount(count + 1)
+    }
   }
 
   return (
@@ -158,8 +165,17 @@ const PaletteGenerator = () => {
           <h2 className="text-center text-xl font-semibold">
             Faça uma paleta customizada
           </h2>
-          <div className="flex items-center gap-y-2 border-2 border-[#FFFFFF50] p-2">
-            <ColorBox />
+          <button
+            type="button"
+            onClick={addColorBox}
+            className="w-fit rounded-xl bg-[#E800CF] p-3 font-semibold"
+          >
+            Adicionar nova cor
+          </button>
+          <div className="flex items-center gap-2 border-2 border-[#FFFFFF50] p-2">
+            {[...Array(count)].map((_, index) => (
+              <ColorBox key={index} />
+            ))}
           </div>
         </div>
       </div>
